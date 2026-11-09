@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Portal | The GlobalPath</title>
+  <meta name="description" content="Track your scholarship application, upload documents, and monitor progress in real time." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="student" data-theme="dark">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+      <span class="brand-name">The GlobalPath</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="workshop.html">Workshop</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQs</a>
+      <a class="nav-portal active" href="student.html">Student Portal</a>
+      <a class="nav-portal" href="admin.html">Admin Portal</a>
+      <a class="nav-cta" href="book-service.html">Book a Service</a>
+    </nav>
+  </header>
+
+  <!-- ========== MOBILE SIDEBAR TOGGLE BUTTON ========== -->
+  <button class="sidebar-open-btn" id="sidebarOpenBtn" aria-label="Open menu" type="button">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+
+  <!-- ========== MOBILE SIDEBAR OVERLAY ========== -->
+  <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+  <main class="student-main-container">
+
+    <!-- ============ LOADING STATE ============ -->
+    <div id="studentLoading" class="student-loading">
+      <div class="student-loading-spinner"></div>
+      <p>Loading dashboard…</p>
+    </div>
+
+    <!-- ============ DASHBOARD ============ -->
+    <div id="studentDashboard" class="portal-layout hidden">
+
+      <!-- ============ SIDEBAR ============ -->
+      <aside class="portal-sidebar" id="portalSidebar" aria-label="Student sidebar">
+
+        <!-- Close button (mobile only) -->
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu" type="button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="sidebar-user">
+          <div class="avatar" id="sidebarAvatar">S</div>
+          <div class="sidebar-user-info">
+            <strong id="sidebarName">Student</strong>
+            <small id="sidebarLevel">Student</small>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Portal sections">
+          <a href="#profileSection" class="sidebar-link active" data-scroll="profileSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Profile</span>
+          </a>
+          <a href="#servicesSection" class="sidebar-link" data-scroll="servicesSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+            </svg>
+            <span>My Services</span>
+          </a>
+          <a href="#documentsSection" class="sidebar-link" data-scroll="documentsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span>Documents</span>
+          </a>
+          <a href="#notificationsSection" class="sidebar-link" data-scroll="notificationsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span>Notifications</span>
+            <span class="sidebar-badge" id="notifBadge" hidden>0</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <button class="sidebar-action" id="themeToggleBtn" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <span id="themeLabel">Dark Mode</span>
+          </button>
+          <button class="sidebar-action sidebar-action-danger" id="logoutBtn" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- ============ MAIN ============ -->
+      <div class="portal-main">
+
+        <!-- TOP HEADER with notification bell -->
+        <div class="portal-header">
+          <div class="portal-header-info">
+            <h1 id="dashboardStudentName">Student</h1>
+            <p>Student</p>
+          </div>
+          <div class="portal-header-actions">
+
+            <!-- ⭐ NEW: Notification bell with unread count -->
+            <a href="#notificationsSection" class="portal-bell" id="portalBell" aria-label="View notifications" title="Notifications">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+              </svg>
+              <span class="portal-bell-badge" id="portalBellBadge" hidden>0</span>
+            </a>
+
+            <a href="book-service.html" class="btn btn-primary">+ Book New Service</a>
+          </div>
+        </div>
+
+        <!-- ============ PROFILE ============ -->
+        <section id="profileSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>My Profile</h3>
+              <button id="editProfileBtn" class="btn btn-secondary" type="button" style="padding:0.5rem 1rem; font-size:0.85rem;">
+                Edit
+              </button>
+            </div>
+
+            <div id="studentProfileView" class="profile-grid-clean">
+              <div class="profile-row"><span>Full Name</span><strong id="profileName">—</strong></div>
+              <div class="profile-row"><span>Email</span><strong id="profileEmail">—</strong></div>
+              <div class="profile-row"><span>Phone</span><strong id="profilePhone">—</strong></div>
+              <div class="profile-row"><span>Date of Birth</span><strong id="profileDOB">—</strong></div>
+              <div class="profile-row"><span>Country</span><strong id="profileCountry">—</strong></div>
+              <div class="profile-row"><span>Education Level</span><strong id="profileLevel">—</strong></div>
+              <div class="profile-row"><span>Gender</span><strong id="profileGender">—</strong></div>
+              <div class="profile-row"><span>Last Qualification</span><strong id="profileQualification">—</strong></div>
+            </div>
+
+            <form id="studentProfileEditForm" class="stack-form hidden">
+              <div class="form-row">
+                <label>Full Name <input type="text" name="name" required /></label>
+                <label>Phone <input type="tel" name="phone" required /></label>
+              </div>
+              <div class="form-row">
+                <label>Date of Birth <input type="date" name="dob" /></label>
+                <label>Country <input type="text" name="country" /></label>
+              </div>
+              <div class="form-row">
+                <label>
+                  Education Level
+                  <select name="level">
+                    <option value="UG">Undergraduate</option>
+                    <option value="Grad">Graduate</option>
+                    <option value="PhD">PhD</option>
+                  </select>
+                </label>
+                <label>
+                  Gender
+                  <select name="gender">
+                    <option value="">— Select —</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                  </select>
+                </label>
+              </div>
+              <label>Last Qualification <input type="text" name="qualification" placeholder="e.g. FSc Pre-Engineering, BS Computer Science" /></label>
+              <div style="display:flex; gap:0.75rem;">
+                <button class="btn btn-primary" type="submit" style="flex:1;">Save Changes</button>
+                <button class="btn btn-secondary" type="button" id="cancelEditProfileBtn" style="flex:1;">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ============ SERVICES ============ -->
+        <section id="servicesSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>My Booked Services</h3>
+              <span id="servicesCountBadge" class="tag">0 active</span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.9rem; margin: 0 0 1.5rem;">
+              Track the real-time progress of each service. Progress updates automatically as our team completes each step.
+            </p>
+            <div id="myServicesList" class="services-list">
+              <div class="empty-state">Loading your services…</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ DOCUMENTS ============ -->
+        <section id="documentsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>My Documents</h3>
+            </div>
+            <p style="color: var(--muted); font-size: 0.9rem; margin: 0 0 1.25rem;">
+              Upload your passport, transcripts, SOP drafts, and other required documents.
+            </p>
+
+            <form id="documentUploadForm" class="stack-form">
+              <div class="form-row">
+                <label>
+                  Document Name
+                  <input type="text" name="docName" placeholder="e.g. Passport, SOP Draft" required />
+                </label>
+                <label>
+                  File (PDF or Image, max 5MB)
+                  <input type="file" name="docFile" accept=".pdf,image/*" required />
+                </label>
+              </div>
+              <button class="btn btn-primary" type="submit" id="uploadDocBtn">Upload Document</button>
+            </form>
+
+            <div id="documentsList" class="docs-list">
+              <div class="empty-state">No documents yet.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ NOTIFICATIONS ============ -->
+        <section id="notificationsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Notifications</h3>
+              <span class="tag" id="notificationsTag" hidden>0 unread</span>
+            </div>
+            <div id="notificationsList" class="notifications-list">
+              <div class="empty-state">No notifications yet.</div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer" style="margin-top: 80px;">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+          <span class="brand-name">The GlobalPath</span>
+        </a>
+        <p>Empowering students to study abroad through fully funded scholarships — with expert guidance and personalized support.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="book-service.html">Book a Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <p class="footer-contact-line">Have a question? Reach out — we reply within 24 hours.</p>
+        <a href="mailto:nexorastudio47@gmail.com" class="footer-email">✉ nexorastudio47@gmail.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 The GlobalPath. All rights reserved.</p>
+      <p>
+        <a href="faq.html">FAQs</a>
+        <span class="dot">·</span>
+        <a href="book-service.html">Book a Service</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <svg class="scroll-progress" viewBox="0 0 48 48">
+      <defs>
+        <linearGradient id="scrollGoldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#d4a24c" />
+          <stop offset="50%" stop-color="#e8c372" />
+          <stop offset="100%" stop-color="#c084fc" />
+        </linearGradient>
+      </defs>
+      <circle class="scroll-progress-bg" cx="24" cy="24" r="21" />
+      <circle class="scroll-progress-bar" cx="24" cy="24" r="21" id="scrollProgressBar" />
+    </svg>
+    <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 15 12 9 18 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

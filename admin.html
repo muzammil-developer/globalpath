@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal | The GlobalPath</title>
+  <meta name="description" content="The GlobalPath admin portal — complete CRM for student, application, service, document, and consultant management." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-page="admin" data-theme="dark">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+      <span class="brand-name">The GlobalPath</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="workshop.html">Workshop</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQs</a>
+      <a class="nav-portal" href="student.html">Student Portal</a>
+      <a class="nav-portal active" href="admin.html">Admin Portal</a>
+      <a class="nav-cta" href="book-service.html">Book a Service</a>
+    </nav>
+  </header>
+
+  <button class="sidebar-open-btn" id="sidebarOpenBtn" aria-label="Open menu" type="button">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+  <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+  <main class="student-main-container">
+
+    <!-- ============ LOADING ============ -->
+    <div id="adminLoading" class="student-loading">
+      <div class="student-loading-spinner"></div>
+      <p>Loading admin panel…</p>
+    </div>
+
+    <!-- ============ LOGIN ============ -->
+    <section id="adminAuth" class="auth-shell hidden">
+      <div class="auth-card animate-in" style="max-width: 500px;">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <div class="auth-icon-wrap">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path>
+            </svg>
+          </div>
+        </div>
+        <p class="eyebrow" style="text-align: center;">Protected Admin Access</p>
+        <h1 style="text-align: center;">Admin Login</h1>
+        <p style="text-align: center; color: var(--muted); font-size: 0.92rem; margin-bottom: 2rem;">
+          Restricted access — authorized administrators only.
+        </p>
+        <form id="adminLoginForm" class="auth-form" novalidate>
+          <label>
+            <span>Admin Email</span>
+            <input type="email" name="email" placeholder="admin@theglobalpath.com" required autocomplete="username" />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="Enter admin password" required autocomplete="current-password" />
+          </label>
+          <button class="btn btn-primary" type="submit" id="adminLoginBtn" style="margin-top: 0.5rem;">🔒 Secure Login</button>
+        </form>
+        <p class="form-message" id="authMessage" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- ============ DASHBOARD ============ -->
+    <div id="adminDashboard" class="portal-layout hidden">
+
+      <!-- ============ SIDEBAR ============ -->
+      <aside class="portal-sidebar" id="portalSidebar" aria-label="Admin sidebar">
+        <button class="sidebar-close-btn" id="sidebarCloseBtn" aria-label="Close menu" type="button">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+
+        <div class="sidebar-user">
+          <div class="avatar" style="background: linear-gradient(135deg, #a855f7, #c084fc); color: #0a0f1e;">A</div>
+          <div class="sidebar-user-info">
+            <strong>Admin</strong>
+            <small style="color: #d8b4fe;">Super Administrator</small>
+          </div>
+        </div>
+
+        <nav class="sidebar-nav" aria-label="Admin sections">
+          <a href="#overviewSection" class="sidebar-link active" data-scroll="overviewSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <span>Dashboard</span>
+          </a>
+          <a href="#studentsSection" class="sidebar-link" data-scroll="studentsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Students</span>
+            <span class="sidebar-badge" id="studentsCount">0</span>
+          </a>
+          <a href="#applicationsSection" class="sidebar-link" data-scroll="applicationsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Applications</span>
+            <span class="sidebar-badge" id="applicationsCount" hidden>0</span>
+          </a>
+          <a href="#servicesAdminSection" class="sidebar-link" data-scroll="servicesAdminSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+            <span>Services</span>
+          </a>
+          <a href="#bookingsSection" class="sidebar-link" data-scroll="bookingsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Bookings</span>
+            <span class="sidebar-badge" id="bookingsCount">0</span>
+          </a>
+          <a href="#documentsAdminSection" class="sidebar-link" data-scroll="documentsAdminSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+            <span>Documents</span>
+            <span class="sidebar-badge" id="documentsCount" hidden>0</span>
+          </a>
+          <a href="#notificationsAdminSection" class="sidebar-link" data-scroll="notificationsAdminSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span>Notifications</span>
+            <span class="sidebar-badge" id="notifsAdminCount" hidden>0</span>
+          </a>
+          <a href="#messagesSection" class="sidebar-link" data-scroll="messagesSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>Messages</span>
+            <span class="sidebar-badge" id="messagesCount" hidden>0</span>
+          </a>
+          <a href="#consultantsSection" class="sidebar-link" data-scroll="consultantsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            <span>Consultants</span>
+          </a>
+          <a href="#tasksSection" class="sidebar-link" data-scroll="tasksSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Tasks</span>
+            <span class="sidebar-badge" id="tasksCount" hidden>0</span>
+          </a>
+          <a href="#calendarSection" class="sidebar-link" data-scroll="calendarSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Calendar</span>
+          </a>
+          <a href="#reportsSection" class="sidebar-link" data-scroll="reportsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <span>Reports</span>
+          </a>
+          <a href="#activityLogsSection" class="sidebar-link" data-scroll="activityLogsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Activity Logs</span>
+          </a>
+          <a href="#settingsSection" class="sidebar-link" data-scroll="settingsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            <span>Settings</span>
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <button class="sidebar-action" id="themeToggleBtn" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="themeIcon">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <span id="themeLabel">Dark Mode</span>
+          </button>
+          <button class="sidebar-action sidebar-action-danger" id="logoutBtn" type="button">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- ============ MAIN ============ -->
+      <div class="portal-main">
+
+        <!-- HEADER with Global Search -->
+        <div class="portal-header">
+          <div class="portal-header-info">
+            <h1>Admin Dashboard</h1>
+            <p>Operations Control Center</p>
+          </div>
+          <div class="portal-header-actions" style="flex: 1; max-width: 500px;">
+            <div style="position: relative; flex: 1;">
+              <input type="search" id="globalSearch" placeholder="🔍 Search students, applications, documents…" style="width: 100%; padding: 0.7rem 1rem;" />
+              <div id="globalSearchResults" class="global-search-results" style="display: none;"></div>
+            </div>
+            <a href="index.html" class="btn btn-secondary" target="_blank" rel="noopener" style="white-space: nowrap;">View Site →</a>
+          </div>
+        </div>
+
+        <!-- ============ 1. OVERVIEW (PROFESSIONAL) ============ -->
+        <section id="overviewSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>📊 Dashboard Overview</h3>
+              <span class="tag" id="overviewTag">Live Data</span>
+            </div>
+
+            <!-- Primary KPI cards -->
+            <div class="kpi-grid">
+              <div class="kpi-card" data-kpi="students">
+                <div class="kpi-icon gold">👥</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Total Students</span>
+                  <strong class="kpi-value" id="kpiStudents">0</strong>
+                  <small class="kpi-trend">All registered</small>
+                </div>
+              </div>
+              <div class="kpi-card" data-kpi="active">
+                <div class="kpi-icon blue">🎯</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Active Services</span>
+                  <strong class="kpi-value" id="kpiActive">0</strong>
+                  <small class="kpi-trend">In progress</small>
+                </div>
+              </div>
+              <div class="kpi-card" data-kpi="pending">
+                <div class="kpi-icon amber">⏳</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Pending Review</span>
+                  <strong class="kpi-value" id="kpiPending">0</strong>
+                  <small class="kpi-trend">Needs action</small>
+                </div>
+              </div>
+              <div class="kpi-card" data-kpi="completed">
+                <div class="kpi-icon green">✅</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Completed</span>
+                  <strong class="kpi-value" id="kpiCompleted">0</strong>
+                  <small class="kpi-trend">Finished</small>
+                </div>
+              </div>
+              <div class="kpi-card" data-kpi="revenue">
+                <div class="kpi-icon purple">💰</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Revenue</span>
+                  <strong class="kpi-value" id="kpiRevenue">0</strong>
+                  <small class="kpi-trend">PKR</small>
+                </div>
+              </div>
+              <div class="kpi-card" data-kpi="docs">
+                <div class="kpi-icon cyan">📄</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Documents</span>
+                  <strong class="kpi-value" id="kpiDocs">0</strong>
+                  <small class="kpi-trend">Uploaded</small>
+                </div>
+              </div>
+              <div class="kpi-card" data-kpi="messages">
+                <div class="kpi-icon blue">💬</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Unread Messages</span>
+                  <strong class="kpi-value" id="kpiMessages">0</strong>
+                  <small class="kpi-trend">Need reply</small>
+                </div>
+              </div>
+              <div class="kpi-card" data-kpi="tasks">
+                <div class="kpi-icon red">📋</div>
+                <div class="kpi-body">
+                  <span class="kpi-label">Active Tasks</span>
+                  <strong class="kpi-value" id="kpiTasks">0</strong>
+                  <small class="kpi-trend">Follow-ups</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts row 1 -->
+            <div class="dashboard-grid" style="margin-top: 1.75rem;">
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">📈 Student Growth (Last 6 Months)</h4>
+                <div style="position: relative; height: 220px;">
+                  <canvas id="chartGrowth"></canvas>
+                </div>
+              </div>
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">📊 Application Status</h4>
+                <div style="position: relative; height: 220px;">
+                  <canvas id="chartApplicationStatus"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts row 2 -->
+            <div class="dashboard-grid" style="margin-top: 1rem;">
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">💼 Service Bookings</h4>
+                <div style="position: relative; height: 220px;">
+                  <canvas id="chartServices"></canvas>
+                </div>
+              </div>
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">🌍 Students by Country</h4>
+                <div style="position: relative; height: 220px;">
+                  <canvas id="chartCountries"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Activity + Pending Actions -->
+            <div class="dashboard-grid" style="margin-top: 1rem;">
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">🔔 Recent Activity</h4>
+                <div id="recentActivityList">
+                  <div class="empty-state" style="padding: 1rem;">No activity yet.</div>
+                </div>
+              </div>
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">⚠️ Pending Actions</h4>
+                <div id="pendingActionsList">
+                  <div class="empty-state" style="padding: 1rem;">All caught up!</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Upcoming Deadlines -->
+            <div class="panel" style="padding: 1.5rem; margin-top: 1rem;">
+              <h4 class="chart-title">📅 Upcoming Deadlines (Next 30 Days)</h4>
+              <div id="upcomingDeadlinesList">
+                <div class="empty-state" style="padding: 1rem;">No upcoming deadlines.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 2. STUDENTS ============ -->
+        <section id="studentsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>👥 Students Directory</h3>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-secondary" id="exportStudentsBtn" type="button" style="padding: 0.5rem 1rem; font-size: 0.82rem;">⬇ Export CSV</button>
+                <span class="tag" id="studentsTag">0 registered</span>
+              </div>
+            </div>
+
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              💡 <strong>Click on any row</strong> to view the complete student profile.
+            </p>
+
+            <div class="form-row" style="margin-bottom: 1rem;">
+              <label>
+                <span>Search</span>
+                <input type="search" id="studentSearch" placeholder="Name, email, phone, ID…" />
+              </label>
+              <label>
+                <span>Filter by Level</span>
+                <select id="studentLevelFilter">
+                  <option value="">All levels</option>
+                  <option value="UG">Undergraduate</option>
+                  <option value="Grad">Graduate</option>
+                  <option value="PhD">PhD</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Level</th>
+                    <th>Bookings</th>
+                    <th>Joined</th>
+                  </tr>
+                </thead>
+                <tbody id="studentsBody">
+                  <tr><td colspan="6" style="text-align:center; color:var(--muted); padding:2rem;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 3. APPLICATIONS ============ -->
+        <section id="applicationsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>📋 Applications</h3>
+              <span class="tag" id="applicationsTag">0 applications</span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Track scholarship applications across all students.
+            </p>
+
+            <div class="form-row" style="margin-bottom: 1rem;">
+              <label>
+                <span>Search</span>
+                <input type="search" id="applicationSearch" placeholder="Student, scholarship, country…" />
+              </label>
+              <label>
+                <span>Filter by Status</span>
+                <select id="applicationStatusFilter">
+                  <option value="">All statuses</option>
+                  <option value="not-started">Not Started</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="under-review">Under Review</option>
+                  <option value="documents-pending">Documents Pending</option>
+                  <option value="submitted">Submitted</option>
+                  <option value="approved">Approved</option>
+                  <option value="rejected">Rejected</option>
+                  <option value="on-hold">On Hold</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Scholarship</th>
+                    <th>Country</th>
+                    <th>Deadline</th>
+                    <th>Progress</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="applicationsBody">
+                  <tr><td colspan="7" style="text-align:center; color:var(--muted); padding:2rem;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 4. SERVICES ============ -->
+        <section id="servicesAdminSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>💼 Service Management</h3>
+              <button class="btn btn-primary" id="addServiceBtn" type="button" style="padding: 0.5rem 1rem; font-size: 0.85rem;">+ Add Service</button>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Manage all consultancy services offered on the website.
+            </p>
+            <div id="servicesAdminList" class="service-admin-grid">
+              <div class="empty-state">Loading services…</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 5. BOOKINGS ============ -->
+        <section id="bookingsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>📋 Bookings</h3>
+              <span class="tag" id="bookingsTag">0 total</span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              💡 <strong>Click progress bar</strong> to update. Changes sync to student dashboard instantly.
+            </p>
+
+            <div class="form-row" style="margin-bottom: 1rem;">
+              <label>
+                <span>Search</span>
+                <input type="search" id="bookingSearch" placeholder="Ref, student, service…" />
+              </label>
+              <label>
+                <span>Filter by Status</span>
+                <select id="bookingStatusFilter">
+                  <option value="">All statuses</option>
+                  <option value="new">Booked</option>
+                  <option value="pending-verification">Pending Verification</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ref</th>
+                    <th>Student</th>
+                    <th>Service</th>
+                    <th>Amount</th>
+                    <th>Payment</th>
+                    <th>Progress</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="bookingsBody">
+                  <tr><td colspan="8" style="text-align:center; color:var(--muted); padding:2rem;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 6. DOCUMENTS ============ -->
+        <section id="documentsAdminSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>📄 Document Management</h3>
+              <span class="tag" id="documentsTag">0 files</span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              All documents uploaded by students — review, download, approve or reject.
+            </p>
+
+            <div class="form-row" style="margin-bottom: 1rem;">
+              <label>
+                <span>Search</span>
+                <input type="search" id="documentSearch" placeholder="Student, document name…" />
+              </label>
+              <label>
+                <span>Filter by Student</span>
+                <select id="documentStudentFilter">
+                  <option value="">All students</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Document</th>
+                    <th>File</th>
+                    <th>Size</th>
+                    <th>Uploaded</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="documentsBody">
+                  <tr><td colspan="6" style="text-align:center; color:var(--muted); padding:2rem;">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 7. NOTIFICATIONS ============ -->
+        <section id="notificationsAdminSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>🔔 Notifications</h3>
+              <span class="tag" id="notifsAdminTag">0 total</span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Send notifications to individual students or all students.
+            </p>
+
+            <div class="dashboard-grid" style="margin-bottom: 1.5rem;">
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">📨 Send Notification</h4>
+                <form id="sendNotificationForm" class="stack-form">
+                  <div class="form-row">
+                    <label>
+                      <span>Recipient</span>
+                      <select id="notifStudent" required>
+                        <option value="">— Choose a student —</option>
+                        <option value="__ALL__" style="font-weight:700;color:var(--gold-400);">📢 All Students</option>
+                      </select>
+                    </label>
+                    <label>
+                      <span>Category</span>
+                      <select id="notifCategory">
+                        <option value="application">Application Update</option>
+                        <option value="document">Document Update</option>
+                        <option value="service">Service Update</option>
+                        <option value="scholarship">Scholarship Update</option>
+                        <option value="announcement">General Announcement</option>
+                        <option value="important">Important Notice</option>
+                      </select>
+                    </label>
+                  </div>
+                  <div class="form-row">
+                    <label>
+                      <span>Priority</span>
+                      <select id="notifPriority">
+                        <option value="normal">Normal</option>
+                        <option value="important">Important</option>
+                        <option value="urgent">Urgent</option>
+                      </select>
+                    </label>
+                    <label>
+                      <span>Title</span>
+                      <input type="text" id="notifTitle" placeholder="e.g. Documents Received" required />
+                    </label>
+                  </div>
+                  <label>
+                    <span>Message</span>
+                    <textarea id="notifMessage" rows="4" placeholder="Write your message…" required></textarea>
+                  </label>
+                  <button class="btn btn-primary" type="submit" style="width: 100%;">🔔 Send Notification</button>
+                  <p class="form-message" id="notifStatus" aria-live="polite"></p>
+                </form>
+              </div>
+
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">📊 Notification Stats</h4>
+                <div class="metric-grid" style="grid-template-columns: 1fr; gap: 0.6rem;">
+                  <div class="metric-card" style="padding: 1rem;"><span>Total Sent</span><strong id="statNotifTotal">0</strong></div>
+                  <div class="metric-card" style="padding: 1rem;"><span>Unread by Students</span><strong id="statNotifUnread">0</strong></div>
+                  <div class="metric-card" style="padding: 1rem;"><span>Read</span><strong id="statNotifRead">0</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="chart-title" style="margin-bottom: 1rem;">📬 Recently Sent</h4>
+            <div id="sentNotifsList">
+              <div class="empty-state">No notifications sent yet.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 8. MESSAGES ============ -->
+        <section id="messagesSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>💬 Contact Messages</h3>
+              <span class="tag" id="messagesTag">0 total</span>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Messages submitted via the website contact form.
+            </p>
+            <div id="messagesList" class="notifications-list">
+              <div class="empty-state">No messages yet.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 9. CONSULTANTS ============ -->
+        <section id="consultantsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>🧑‍💼 Consultants</h3>
+              <button class="btn btn-primary" id="addConsultantBtn" type="button" style="padding: 0.5rem 1rem; font-size: 0.85rem;">+ Add Consultant</button>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Manage consultants who guide students through their applications.
+            </p>
+            <div id="consultantsList" class="service-admin-grid">
+              <div class="empty-state">No consultants added yet.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 10. TASKS ============ -->
+        <section id="tasksSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>✅ Tasks & Follow-ups</h3>
+              <button class="btn btn-primary" id="addTaskBtn" type="button" style="padding: 0.5rem 1rem; font-size: 0.85rem;">+ New Task</button>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Track follow-ups, document reviews, and application deadlines.
+            </p>
+            <div id="tasksList">
+              <div class="empty-state">No tasks yet.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 11. CALENDAR ============ -->
+        <section id="calendarSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>📅 Calendar & Deadlines</h3>
+              <button class="btn btn-primary" id="addEventBtn" type="button" style="padding: 0.5rem 1rem; font-size: 0.85rem;">+ Add Event</button>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Scholarship deadlines, application dates, and student appointments.
+            </p>
+            <div id="calendarList" class="deadline-stack">
+              <div class="empty-state">No events yet.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 12. REPORTS ============ -->
+        <section id="reportsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>📊 Reports & Analytics</h3>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Comprehensive reports for business decisions.
+            </p>
+
+            <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+              <div class="info-card" style="padding: 1.25rem; cursor: pointer;" data-report="students">
+                <h3>👥 Students Report</h3>
+                <p>All registered students with details</p>
+              </div>
+              <div class="info-card" style="padding: 1.25rem; cursor: pointer;" data-report="applications">
+                <h3>📋 Applications Report</h3>
+                <p>All applications with statuses</p>
+              </div>
+              <div class="info-card" style="padding: 1.25rem; cursor: pointer;" data-report="bookings">
+                <h3>💼 Bookings Report</h3>
+                <p>Service bookings and revenue</p>
+              </div>
+              <div class="info-card" style="padding: 1.25rem; cursor: pointer;" data-report="documents">
+                <h3>📄 Documents Report</h3>
+                <p>All uploaded documents</p>
+              </div>
+            </div>
+
+            <div id="reportOutput" style="margin-top: 1.5rem;"></div>
+          </div>
+        </section>
+
+        <!-- ============ 13. ACTIVITY LOGS ============ -->
+        <section id="activityLogsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>📜 Activity Logs & Audit Trail</h3>
+              <button class="btn btn-secondary" id="clearLogsBtn" type="button" style="padding: 0.5rem 1rem; font-size: 0.82rem;">Clear Logs</button>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Complete history of admin actions.
+            </p>
+            <div id="activityLogsList">
+              <div class="empty-state">No activity logs yet.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 14. SETTINGS ============ -->
+        <section id="settingsSection" class="portal-section">
+          <div class="panel">
+            <div class="panel-header">
+              <h3>⚙️ Settings</h3>
+            </div>
+            <p style="color: var(--muted); font-size: 0.88rem; margin: 0 0 1rem;">
+              Admin account and preferences. (Firebase Auth ready)
+            </p>
+
+            <div class="dashboard-grid">
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">👤 Admin Profile</h4>
+                <form id="adminSettingsForm" class="stack-form">
+                  <label>
+                    <span>Display Name</span>
+                    <input type="text" id="adminName" value="Admin" />
+                  </label>
+                  <label>
+                    <span>Email (read-only)</span>
+                    <input type="email" id="adminEmail" value="theglobalpath@gmail.com" readonly />
+                  </label>
+                  <button class="btn btn-primary" type="submit">💾 Save Settings</button>
+                </form>
+              </div>
+
+              <div class="panel" style="padding: 1.5rem;">
+                <h4 class="chart-title">🔒 Security</h4>
+                <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1rem;">
+                  Change password, enable 2FA, and manage sessions.
+                </p>
+                <div style="display: grid; gap: 0.5rem;">
+                  <button class="btn btn-secondary" type="button" disabled>🔐 Change Password (Firebase)</button>
+                  <button class="btn btn-secondary" type="button" disabled>📱 Two-Factor Auth (Coming)</button>
+                  <button class="btn btn-secondary" type="button" disabled>📋 Session Management (Coming)</button>
+                </div>
+                <p style="color: var(--muted); font-size: 0.78rem; margin-top: 1rem;">
+                  ⚠️ These features require Firebase Authentication integration.
+                </p>
+              </div>
+            </div>
+
+            <div class="panel" style="padding: 1.5rem; margin-top: 1rem;">
+              <h4 class="chart-title">🔥 Firebase Integration</h4>
+              <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 1rem;">
+                To enable real database, follow these steps:
+              </p>
+              <ol style="color: var(--muted); font-size: 0.85rem; line-height: 1.8; padding-left: 1.5rem;">
+                <li>Create a Firebase project</li>
+                <li>Enable Auth, Firestore, and Storage</li>
+                <li>Add SDK to admin.html</li>
+                <li>Replace <code>read()</code>/<code>write()</code> in index.js with Firebase functions</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer" style="margin-top: 80px;">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+          <span class="brand-name">The GlobalPath</span>
+        </a>
+        <p>Empowering students to study abroad through fully funded scholarships.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="book-service.html">Book a Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <p class="footer-contact-line">Have a question? We reply within 24 hours.</p>
+        <a href="mailto:nexorastudio47@gmail.com" class="footer-email">✉ nexorastudio47@gmail.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 The GlobalPath. All rights reserved.</p>
+      <p><a href="faq.html">FAQs</a> <span class="dot">·</span> <a href="book-service.html">Book a Service</a></p>
+    </div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <svg class="scroll-progress" viewBox="0 0 48 48">
+      <defs><linearGradient id="scrollGoldGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#d4a24c" /><stop offset="50%" stop-color="#e8c372" /><stop offset="100%" stop-color="#c084fc" /></linearGradient></defs>
+      <circle class="scroll-progress-bg" cx="24" cy="24" r="21" /><circle class="scroll-progress-bar" cx="24" cy="24" r="21" id="scrollProgressBar" />
+    </svg>
+    <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 15 12 9 18 15"></polyline></svg>
+  </button>
+
+  <!-- ============ PROGRESS MODAL ============ -->
+  <div class="custom-modal" id="progressModal">
+    <div class="custom-modal-backdrop" data-close-progress></div>
+    <div class="custom-modal-card">
+      <button class="custom-modal-close" data-close-progress aria-label="Close">×</button>
+      <div class="custom-modal-icon">📊</div>
+      <h3>Update Progress</h3>
+      <p class="custom-modal-subtitle" id="progressModalSubtitle">—</p>
+      <div class="progress-preview">
+        <div class="progress-preview-bar"><div class="progress-preview-fill" id="progressPreviewFill" style="width: 0%;"></div></div>
+        <strong class="progress-preview-value" id="progressPreviewValue">0%</strong>
+      </div>
+      <div class="progress-presets">
+        <button type="button" data-preset="0">0%</button>
+        <button type="button" data-preset="25">25%</button>
+        <button type="button" data-preset="50">50%</button>
+        <button type="button" data-preset="75">75%</button>
+        <button type="button" data-preset="100">100%</button>
+      </div>
+      <input type="range" min="0" max="100" step="5" value="0" class="progress-slider" id="progressSlider" />
+      <div class="custom-modal-actions">
+        <button class="btn btn-secondary" type="button" data-close-progress>Cancel</button>
+        <button class="btn btn-primary" type="button" id="progressSaveBtn">Save Progress</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PAYMENT PROOF MODAL ============ -->
+  <div class="custom-modal" id="paymentProofModal">
+    <div class="custom-modal-backdrop" data-close-proof></div>
+    <div class="custom-modal-card" style="max-width: 560px;">
+      <button class="custom-modal-close" data-close-proof aria-label="Close">×</button>
+      <div class="custom-modal-icon" style="background: rgba(96, 165, 250, 0.15); color: #60a5fa;">💳</div>
+      <h3>Payment Proof</h3>
+      <p class="custom-modal-subtitle" id="paymentProofSubtitle">—</p>
+      <div id="paymentProofContent" style="margin-top: 1rem;"></div>
+    </div>
+  </div>
+
+  <!-- ============ STUDENT PROFILE MODAL ============ -->
+  <div class="custom-modal" id="studentProfileModal">
+    <div class="custom-modal-backdrop" data-close-student-profile></div>
+    <div class="custom-modal-card" style="max-width: 780px; text-align: left; max-height: 92vh; overflow-y: auto; padding: 2rem;">
+      <button class="custom-modal-close" data-close-student-profile aria-label="Close">×</button>
+      <div id="studentProfileModalContent"></div>
+    </div>
+  </div>
+
+  <!-- ============ CONSULTANT MODAL ============ -->
+  <div class="custom-modal" id="consultantModal">
+    <div class="custom-modal-backdrop" data-close-consultant></div>
+    <div class="custom-modal-card" style="max-width: 500px; text-align: left;">
+      <button class="custom-modal-close" data-close-consultant aria-label="Close">×</button>
+      <div class="custom-modal-icon">🧑‍💼</div>
+      <h3 id="consultantModalTitle">Add Consultant</h3>
+      <p class="custom-modal-subtitle">Manage consultant information</p>
+      <form id="consultantForm" class="stack-form" style="margin-top: 1rem;">
+        <input type="hidden" id="consultantId" />
+        <label><span>Name</span><input type="text" id="consultantName" required /></label>
+        <label><span>Email</span><input type="email" id="consultantEmail" required /></label>
+        <label><span>Phone</span><input type="tel" id="consultantPhone" /></label>
+        <label><span>Specialization</span><input type="text" id="consultantSpec" placeholder="e.g. GKS, MEXT, Erasmus" /></label>
+        <div class="custom-modal-actions">
+          <button class="btn btn-secondary" type="button" data-close-consultant>Cancel</button>
+          <button class="btn btn-primary" type="submit">💾 Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ TASK MODAL ============ -->
+  <div class="custom-modal" id="taskModal">
+    <div class="custom-modal-backdrop" data-close-task></div>
+    <div class="custom-modal-card" style="max-width: 500px; text-align: left;">
+      <button class="custom-modal-close" data-close-task aria-label="Close">×</button>
+      <div class="custom-modal-icon">✅</div>
+      <h3>Create Task</h3>
+      <p class="custom-modal-subtitle">Add a new follow-up task</p>
+      <form id="taskForm" class="stack-form" style="margin-top: 1rem;">
+        <label><span>Task Title</span><input type="text" id="taskTitle" required placeholder="e.g. Review documents" /></label>
+        <label><span>Description</span><textarea id="taskDesc" rows="2"></textarea></label>
+        <div class="form-row">
+          <label>
+            <span>Priority</span>
+            <select id="taskPriority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+              <option value="urgent">Urgent</option>
+            </select>
+          </label>
+          <label><span>Due Date</span><input type="date" id="taskDue" /></label>
+        </div>
+        <div class="custom-modal-actions">
+          <button class="btn btn-secondary" type="button" data-close-task>Cancel</button>
+          <button class="btn btn-primary" type="submit">💾 Create Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============ EVENT MODAL ============ -->
+  <div class="custom-modal" id="eventModal">
+    <div class="custom-modal-backdrop" data-close-event></div>
+    <div class="custom-modal-card" style="max-width: 500px; text-align: left;">
+      <button class="custom-modal-close" data-close-event aria-label="Close">×</button>
+      <div class="custom-modal-icon">📅</div>
+      <h3>Add Event</h3>
+      <p class="custom-modal-subtitle">Add a deadline or appointment</p>
+      <form id="eventForm" class="stack-form" style="margin-top: 1rem;">
+        <label><span>Event Title</span><input type="text" id="eventTitle" required /></label>
+        <div class="form-row">
+          <label><span>Date</span><input type="date" id="eventDate" required /></label>
+          <label>
+            <span>Type</span>
+            <select id="eventType">
+              <option value="deadline">Scholarship Deadline</option>
+              <option value="application">Application Deadline</option>
+              <option value="document">Document Deadline</option>
+              <option value="appointment">Student Appointment</option>
+              <option value="followup">Follow-up</option>
+            </select>
+          </label>
+        </div>
+        <div class="custom-modal-actions">
+          <button class="btn btn-secondary" type="button" data-close-event>Cancel</button>
+          <button class="btn btn-primary" type="submit">💾 Add Event</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>

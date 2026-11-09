@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing | The GlobalPath</title>
+  <meta name="description"
+    content="Transparent pricing for all The GlobalPath scholarship consultancy services — consultation, SOP writing, study plan, LOR, CV, profile assessment, document review, application submission, and complete end-to-end support. All prices in Pakistani Rupees (PKR)." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ============ PRICING PAGE (scoped) ============ */
+    .price-warning {
+      margin: 0 0 2.5rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(212, 162, 76, 0.07);
+      border: 1px solid rgba(212, 162, 76, 0.28);
+      border-radius: 14px;
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 0.95rem;
+    }
+
+    .price-warning strong {
+      color: var(--gold-400);
+      font-weight: 700;
+    }
+
+    .price-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: transform var(--dur) var(--ease),
+                  box-shadow var(--dur) var(--ease),
+                  border-color var(--dur) var(--ease);
+    }
+
+    .price-card:hover {
+      border-color: rgba(212, 162, 76, 0.35);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), var(--shadow-glow-gold);
+    }
+
+    /* ⭐ ANCHOR JUMP: sticky navbar ke neeche card cut nahi hoga */
+    .price-card[id] {
+      scroll-margin-top: calc(var(--header-h, 76px) + 24px);
+    }
+
+    /* ⭐ TARGET HIGHLIGHT: anchor se aane par card briefly glow karega */
+    .price-card:target {
+      border-color: rgba(212, 162, 76, 0.7);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.5),
+        0 0 0 3px rgba(212, 162, 76, 0.2),
+        0 0 60px rgba(212, 162, 76, 0.25);
+      animation: targetPulse 2.2s ease-out 1;
+    }
+
+    @keyframes targetPulse {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+      30% {
+        transform: translateY(-4px) scale(1.005);
+      }
+      100% {
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .price-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .price-card-head-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .price-num {
+      display: inline-grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--gold-soft);
+      color: var(--gold-400);
+      border: 1px solid rgba(212, 162, 76, 0.28);
+      font-weight: 800;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .price-card h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--text);
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .price-cta {
+      flex-shrink: 0;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* "What You'll Get" — clean, no highlight */
+    .price-get-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 0 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .price-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.75rem;
+    }
+
+    @media (min-width: 900px) {
+      .price-list { grid-template-columns: 1fr 1fr; column-gap: 2rem; }
+    }
+
+    .price-list li {
+      position: relative;
+      padding-left: 1.4rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.94rem;
+    }
+
+    .price-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--gold-500);
+      font-weight: 700;
+    }
+
+    /* Meta info box */
+    .price-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      padding: 1.25rem 1.35rem;
+      background: rgba(212, 162, 76, 0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .price-meta-item {
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .price-meta-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .price-meta-value {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .price-meta-value strong {
+      color: var(--gold-400);
+      font-weight: 700;
+    }
+
+    .price-meta-value .tier {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .price-meta-value .tier strong {
+      color: var(--gold-400);
+    }
+
+    /* Please Note callout */
+    .price-note {
+      margin: 1.25rem 0 0;
+      padding: 1rem 1.15rem;
+      border-left: 3px solid var(--gold-500);
+      background: rgba(212, 162, 76, 0.05);
+      border-radius: 0 8px 8px 0;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .price-note strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Contact Admin section */
+    .contact-admin-box {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      background: linear-gradient(135deg, rgba(212, 162, 76, 0.08), rgba(168, 85, 247, 0.06));
+      border: 1px solid rgba(212, 162, 76, 0.28);
+      border-radius: var(--radius);
+    }
+
+    .contact-admin-box h2 {
+      margin: 0 0 1rem;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      color: var(--text);
+    }
+
+    .contact-admin-box p {
+      margin: 0 auto 1.75rem;
+      max-width: 560px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 720px) {
+      .price-card { padding: 1.35rem; }
+      .price-card-head { gap: 0.85rem; }
+      .price-card h3 { font-size: 1.08rem; }
+      .price-card-head-left { gap: 0.75rem; }
+      .price-num { width: 40px; height: 40px; font-size: 0.85rem; }
+      .price-cta { width: 100%; text-align: center; }
+      .price-meta { grid-template-columns: 1fr; padding: 1rem; }
+      .price-warning { font-size: 0.9rem; padding: 1rem 1.15rem; }
+      .contact-admin-box { padding: 2rem 1.25rem; }
+
+      .price-card[id] {
+        scroll-margin-top: calc(var(--header-h, 64px) + 16px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .price-card:target { animation: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+      <span class="brand-name">The GlobalPath</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="workshop.html">Workshop</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html" class="active">Pricing</a>
+      <a href="faq.html">FAQs</a>
+      <a class="nav-portal" href="student.html">Student Portal</a>
+      <a class="nav-portal" href="admin.html">Admin Portal</a>
+      <a class="nav-cta" href="book-service.html">Book a Service</a>
+    </nav>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main id="pricing">
+    <!-- PAGE HERO -->
+    <section class="hero" style="padding-top: 3rem; padding-bottom: 1rem;">
+      <div class="hero-copy animate-in" style="max-width: 860px;">
+        <p class="eyebrow">Pricing</p>
+        <h1>Our Services</h1>
+        <p style="font-weight: 600; color: #e8ecf5; font-size: 1.15rem;">
+          Personalized guidance, professional document support, and application assistance.
+        </p>
+        <p>
+          Whether you're applying for your first scholarship or preparing your final
+          application, The Global Path provides personalized guidance and professional support
+          to help you submit a strong, competitive application with confidence.
+        </p>
+      </div>
+    </section>
+
+    <!-- PKR WARNING -->
+    <section class="section" style="padding-top: 0;">
+      <div class="price-warning">
+        <strong>⚠️ Important Note:</strong> All prices on this website are listed in
+        Pakistani Rupees (PKR). If you are applying from outside Pakistan, please convert
+        the service fee into your local currency and pay the equivalent amount.
+      </div>
+
+      <!-- ============ 01 — Consultation ============ -->
+      <article class="price-card" id="service-01">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">01</span>
+            <h3>Consultation Session</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>Complete guidance on the scholarship according to your profile and its overall application procedure.</li>
+          <li>Answers to all your scholarship-related questions and confusions.</li>
+          <li>A personalized roadmap based on your academic profile and goals.</li>
+          <li>Tips and strategies to strengthen your profile and make it more competitive.</li>
+          <li>Guidance on how to prepare scholarship-winning application documents.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">1 Hour</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value"><strong>1500 PKR</strong></span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Applicable For</span>
+            <span class="price-meta-value">Both UG &amp; Graduate applicants</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 02 — Personal Statement Review ============ -->
+      <article class="price-card" id="service-02">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">02</span>
+            <h3>Personal Statement Review</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A detailed review of your SOP according to your chosen program and scholarship requirements.</li>
+          <li>Identification of grammatical, structural, and content-related mistakes.</li>
+          <li>Personalized suggestions to improve clarity, impact, and overall quality.</li>
+          <li>Guidance on aligning your SOP with scholarship expectations.</li>
+          <li>Expert tips to transform your SOP into a strong and competitive scholarship-winning document.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>2000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>3000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Revisions</span>
+            <span class="price-meta-value">2</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 03 — Personal Statement Writing ============ -->
+      <article class="price-card" id="service-03">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">03</span>
+            <h3>Personal Statement Writing</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A personalized SOP written based on your academic background, achievements, goals, and experiences.</li>
+          <li>A detailed information collection process to understand your profile.</li>
+          <li>A professionally structured and original SOP tailored to your selected program and scholarship.</li>
+          <li>Content focused on highlighting your strengths and presenting a compelling scholarship application.</li>
+          <li>A high-quality, scholarship-focused SOP that reflects your profile in the best possible way.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>3000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>5000 PKR</strong> — Graduate</span>
+              <span class="tier"><strong>6000 PKR</strong> — PhD</span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 04 — Study Plan Review ============ -->
+      <article class="price-card" id="service-04">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">04</span>
+            <h3>Study Plan Review</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A comprehensive review of your Study Plan based on your chosen program and scholarship requirements.</li>
+          <li>Detailed identification of grammatical, structural, formatting, clarity, and content-related issues.</li>
+          <li>Guidance on aligning your Study Plan with the expectations of universities and scholarship selection committees.</li>
+          <li>Recommendations to effectively present your academic background, study objectives, research interests (if applicable), and long-term career goals.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>2000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>3000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Revisions</span>
+            <span class="price-meta-value">2</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 05 — Study Plan Writing ============ -->
+      <article class="price-card" id="service-05">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">05</span>
+            <h3>Study Plan Writing</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A fully personalized Study Plan written from scratch based on your academic background, achievements, experiences, and future aspirations.</li>
+          <li>Study Plan tailored to your chosen program, university, and scholarship requirements.</li>
+          <li>Content strategically written to align with scholarship expectations and selection criteria while showcasing your motivation, academic interests, and long-term vision.</li>
+          <li>A clear and compelling explanation of your study objectives, reasons for choosing the program, and how it supports your future career plans.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>3000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>5000 PKR</strong> — Graduate</span>
+              <span class="tier"><strong>6000 PKR</strong> — PhD</span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 06 — LOR Review ============ -->
+      <article class="price-card" id="service-06">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">06</span>
+            <h3>LOR Review <span style="font-weight:500; font-size:0.92rem; color:var(--muted);">(If you are drafting it yourself)</span></h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A detailed review of your Letter of Recommendation.</li>
+          <li>Identification of mistakes related to structure, language, clarity, and overall presentation.</li>
+          <li>Personalized suggestions to improve the quality and effectiveness of your LOR.</li>
+          <li>Guidance on aligning your recommendation letter with scholarship requirements.</li>
+          <li>Tips to make your LOR more impactful.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>1000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>2000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Revisions</span>
+            <span class="price-meta-value">1</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 07 — LOR Draft Writing ============ -->
+      <article class="price-card" id="service-07">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">07</span>
+            <h3>LOR Draft Writing <span style="font-weight:500; font-size:0.92rem; color:var(--muted);">(If you are not able to get it from College / University)</span></h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A personalized Letter of Recommendation written based on your profile and achievements.</li>
+          <li>A detailed information collection process to understand your academic background, strengths, and accomplishments.</li>
+          <li>A professionally structured and scholarship-focused recommendation letter.</li>
+          <li>Content aligned with scholarship expectations and designed to highlight your potential in the strongest possible way.</li>
+          <li>A polished and professional document ready for review by your recommender before submission.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>2000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>3500 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 08 — CV / Resume Review ============ -->
+      <article class="price-card" id="service-08">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">08</span>
+            <h3>CV / Resume Review</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A comprehensive review of your CV or Resume.</li>
+          <li>Detailed evaluation of formatting, content, grammar, structure, and overall presentation.</li>
+          <li>Personalized feedback to improve clarity, professionalism, readability, and overall impact.</li>
+          <li>Recommendations to effectively highlight your academic achievements, research, internships, work experience, leadership roles, volunteer work, certifications, extracurricular activities, and technical skills.</li>
+          <li>Identification of missing sections and opportunities to strengthen your profile.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>1000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>1500 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 09 — CV / Resume Writing ============ -->
+      <article class="price-card" id="service-09">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">09</span>
+            <h3>CV / Resume Writing</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A CV or Resume written from scratch based on your academic profile and experience.</li>
+          <li>A detailed information collection process to understand your education, achievements, skills, research, projects, work experience, and extracurricular activities.</li>
+          <li>A professional layout with clear and organized formatting.</li>
+          <li>Content tailored to scholarship and university application requirements.</li>
+          <li>An ATS-friendly, scholarship-focused CV or Resume that presents your profile in the best possible way.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">4 to 5 Working Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>1500 PKR</strong> — Undergraduate
+              <span class="tier"><strong>2000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+      </article>
+
+      <!-- ============ 10 — Complete Guidance (1 Month) ============ -->
+      <article class="price-card" id="service-10">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">10</span>
+            <h3>Complete Guidance for Scholarship Process <span style="font-weight:500; font-size:0.92rem; color:var(--muted);">(1 Month)</span></h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>Complete guidance on the scholarship application process for one month.</li>
+          <li>Step-by-step support for your application journey.</li>
+          <li>Personalized advice based on your academic profile and scholarship goals.</li>
+          <li>Expert tips and strategies for preparing a strong scholarship application.</li>
+          <li>Guidance on how to write your SOP, Study Plan, LOR, Personal Statement, CV/Resume, and other required documents on your own.</li>
+          <li>Guide for program selection and choosing the most suitable track according to your profile.</li>
+          <li>Answers to your scholarship-related questions throughout the guidance period.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">1 Month</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>6000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>8000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+        <p class="price-note">
+          <strong>Please Note</strong>
+          Document writing is <strong>NOT</strong> included. Document review is <strong>NOT</strong> included. This service provides guidance, strategies, and personalized support only.
+        </p>
+      </article>
+
+      <!-- ============ 11 — Profile Review (Documents only) ============ -->
+      <article class="price-card" id="service-11">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">11</span>
+            <h3>Profile Review <span style="font-weight:500; font-size:0.92rem; color:var(--muted);">(Only Documents)</span></h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A comprehensive review of all your scholarship documents.</li>
+          <li>Detailed feedback on the quality, structure, clarity, and overall presentation of each document.</li>
+          <li>Identification of mistakes and areas that need improvement.</li>
+          <li>Personalized suggestions to strengthen your application and better align your documents with scholarship expectations.</li>
+          <li>Guidance on improving the overall consistency and competitiveness of your application.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">10 to 15 Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>8,000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>10,000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+        <p class="price-note">
+          <strong>Please Note</strong>
+          This service includes complete scholarship document review only. Document writing is <strong>NOT</strong> included. Feedback and recommendations will be provided so you can make the necessary improvements yourself.
+        </p>
+      </article>
+
+      <!-- ============ 12 — Overall Profile Assessment ============ -->
+      <article class="price-card" id="service-12">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">12</span>
+            <h3>Overall Profile Assessment</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A comprehensive assessment of your overall academic profile.</li>
+          <li>Evaluation of your previous academic background and achievements.</li>
+          <li>Personalized university recommendations based on your profile and target program.</li>
+          <li>Guidance on selecting the most suitable program and academic track.</li>
+          <li>Identification and correction of mistakes in your application documents, including necessary rewriting where required.</li>
+          <li>Verification of all required documents to ensure they meet scholarship requirements.</li>
+          <li>Personalized preparation suggestions to strengthen your overall application.</li>
+          <li>A detailed roadmap with expert recommendations to help maximize your scholarship success.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">10 to 15 Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>15,000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>18,000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+        <p class="price-note">
+          <strong>Please Note</strong>
+          This service includes complete profile (documents + university / track suggestion) review only. Document writing is <strong>NOT</strong> included.
+        </p>
+      </article>
+
+      <!-- ============ 13 — Application Submission ============ -->
+      <article class="price-card" id="service-13">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">13</span>
+            <h3>Application Submission</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>Accurate submission of your scholarship application.</li>
+          <li>Careful completion of all required application fields.</li>
+          <li>Verification of the information entered before final submission.</li>
+          <li>Accurate and professional application submission based on the documents you provide.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">9 to 10 Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>10,000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>12,000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+        <p class="price-note">
+          <strong>Please Note</strong>
+          Document review is <strong>NOT</strong> included. Document writing or rewriting is <strong>NOT</strong> included. No changes will be made to your documents — your application will be submitted using the documents exactly as provided by you. This service focuses solely on ensuring that your application is submitted correctly and without avoidable technical errors.
+        </p>
+      </article>
+
+      <!-- ============ 14 — Documents Review + Application Submission ============ -->
+      <article class="price-card" id="service-14">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">14</span>
+            <h3>Documents Review + Application Submission</h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A complete review of all your scholarship documents.</li>
+          <li>Assessment of your overall application profile.</li>
+          <li>Identification of mistakes and suggestions for necessary improvements before submission.</li>
+          <li>Verification that your documents are properly aligned with scholarship requirements.</li>
+          <li>Professional submission of your scholarship application after the review process.</li>
+          <li>Careful completion and verification of all application details.</li>
+          <li>An error-free submission process designed to avoid common technical and administrative mistakes that often lead to application rejection.</li>
+          <li>Final verification before submission to ensure your application is complete and professionally presented.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">15 to 20 Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>18,000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>20,000 PKR</strong> — Graduate / PhD</span>
+            </span>
+          </div>
+        </div>
+        <p class="price-note">
+          <strong>Please Note</strong>
+          This service includes document review before submission. Your application will only be submitted after the review process is complete.
+        </p>
+      </article>
+
+      <!-- ============ 15 — Complete End-to-End Support ============ -->
+      <article class="price-card" id="service-15">
+        <div class="price-card-head">
+          <div class="price-card-head-left">
+            <span class="price-num">15</span>
+            <h3>Complete End-to-End Support <span style="font-weight:500; font-size:0.92rem; color:var(--muted);">(All-in-One Service)</span></h3>
+          </div>
+          <a class="btn btn-primary price-cta" href="book-service.html">Book Now</a>
+        </div>
+        <p class="price-get-title">What You'll Get</p>
+        <ul class="price-list">
+          <li>A detailed review and assessment of your academic profile.</li>
+          <li>Personalized university and program recommendations based on your profile, qualifications, and scholarship goals.</li>
+          <li>A customized scholarship roadmap to help you plan every step of your application.</li>
+          <li>Professional writing of all major scholarship documents — SOP, Study Plan, LOR, Personal Statement, CV/Resume, and other required documents where applicable.</li>
+          <li>Review and feedback on all supporting documents you prepare to ensure they meet scholarship standards.</li>
+          <li>Step-by-step guidance on obtaining and preparing every required document.</li>
+          <li>Personalized advice on how to strengthen your profile and make it more competitive.</li>
+          <li>Recommendations of useful resources and preparation strategies to help you build an exceptional scholarship profile.</li>
+          <li>Verification of all documents to ensure they comply with scholarship requirements.</li>
+        </ul>
+        <div class="price-meta">
+          <div class="price-meta-item">
+            <span class="price-meta-label">Duration</span>
+            <span class="price-meta-value">15 to 20 Days</span>
+          </div>
+          <div class="price-meta-item">
+            <span class="price-meta-label">Charges</span>
+            <span class="price-meta-value">
+              <strong>24,000 PKR</strong> — Undergraduate
+              <span class="tier"><strong>28,000 PKR</strong> — Graduate</span>
+              <span class="tier"><strong>35,000 PKR</strong> — PhD</span>
+            </span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ CONTACT ADMIN ============ -->
+    <section class="section section-alt" id="contact-admin">
+      <div class="contact-admin-box">
+        <p class="eyebrow" style="justify-content:center; display:inline-flex;">Urgent Delivery</p>
+        <h2>For Urgent Delivery of any document, Contact Admin.</h2>
+        <p>
+          Need a document delivered urgently? Reach out to us directly on Instagram —
+          we'll respond as fast as possible.
+        </p>
+        <a class="btn btn-primary" href="https://instagram.com/the_globalpath"
+           target="_blank" rel="noopener noreferrer">
+          Contact Admin — @the_globalpath
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= PROFESSIONAL FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+          <span class="brand-name">The GlobalPath</span>
+        </a>
+        <p>
+          Empowering students to study abroad through fully funded scholarships — with
+          expert guidance, clear processes, and personalized support at every step.
+        </p>
+        <div class="footer-social">
+          <a href="https://instagram.com/the_globalpath"
+             target="_blank"
+             rel="noopener noreferrer"
+             aria-label="Instagram — The GlobalPath">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true" focusable="false">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="workshop.html">Workshop</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="faq.html">FAQs</a></li>
+          <li><a href="book-service.html">Book a Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Scholarship Consultation</a></li>
+          <li><a href="services.html">Profile Assessment</a></li>
+          <li><a href="services.html">SOP &amp; Motivation Letter</a></li>
+          <li><a href="services.html">Document Review</a></li>
+          <li><a href="services.html">Interview Preparation</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <p class="footer-contact-line">
+          Have a question about your scholarship journey? Reach out — we reply within 24 hours.
+        </p>
+        <a href="mailto:nexorastudio47@gmail.com" class="footer-email">
+          ✉ nexorastudio47@gmail.com
+        </a>
+        <a href="student.html" class="btn btn-secondary footer-portal-btn">
+          Student Portal →
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 The GlobalPath. All rights reserved.</p>
+      <p>
+        <a href="faq.html">FAQs</a>
+        <span class="dot">·</span>
+        <a href="book-service.html">Book a Service</a>
+        <span class="dot">·</span>
+        <a href="student.html">Student Portal</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top + Progress Circle -->
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top" title="Back to top">
+    <svg class="scroll-progress" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="scrollGoldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#d4a24c" />
+          <stop offset="50%" stop-color="#e8c372" />
+          <stop offset="100%" stop-color="#c084fc" />
+        </linearGradient>
+      </defs>
+      <circle class="scroll-progress-bg" cx="24" cy="24" r="21" />
+      <circle class="scroll-progress-bar" cx="24" cy="24" r="21" id="scrollProgressBar" />
+    </svg>
+    <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+         aria-hidden="true" focusable="false">
+      <polyline points="6 15 12 9 18 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="index.js"></script>
+
+  <!-- ⭐ Smooth scroll to hash target on page load (for services.html → pricing.html#service-XX) -->
+  <script>
+    (function () {
+      if (!window.location.hash) return;
+      window.addEventListener('load', function () {
+        var target = document.querySelector(window.location.hash);
+        if (target) {
+          setTimeout(function () {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 120);
+        }
+      });
+    })();
+  </script>
+</body>
+
+</html>

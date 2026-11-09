@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Service | The GlobalPath</title>
+  <meta name="description"
+    content="Book a scholarship consultancy service with The GlobalPath — pay securely via JazzCash, EasyPaisa, or Bank Transfer." />
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .booking-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: start;
+      margin-top: 1rem;
+    }
+    @media (max-width: 1020px) {
+      .booking-layout { grid-template-columns: 1fr; }
+    }
+
+    .booking-form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+    }
+
+    .form-section {
+      padding-bottom: 1.75rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section:last-of-type {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .form-section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0 0 1.25rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .step-num {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--gold-soft);
+      color: var(--gold-400);
+      border: 1px solid rgba(212, 162, 76, 0.28);
+      font-size: 0.85rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 640px) {
+      .form-row { grid-template-columns: 1fr; }
+      .booking-form-card { padding: 1.35rem; }
+    }
+
+    .form-row label,
+    .form-section > label {
+      display: grid;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .form-row label:last-child,
+    .form-section > label:last-child { margin-bottom: 0; }
+
+    .required-mark { color: var(--gold-400); font-weight: 700; }
+    .optional-mark { color: var(--muted); font-size: 0.78rem; font-weight: 400; }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    @media (max-width: 480px) {
+      .payment-grid { grid-template-columns: 1fr; }
+    }
+
+    .pay-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.95rem;
+      background: rgba(15, 24, 45, 0.7);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.22s var(--ease);
+      user-select: none;
+    }
+    .pay-card:hover {
+      border-color: rgba(212, 162, 76, 0.4);
+      background: rgba(212, 162, 76, 0.04);
+    }
+    .pay-card.active {
+      border-color: var(--gold-500);
+      background: rgba(212, 162, 76, 0.08);
+      box-shadow: 0 0 0 3px rgba(212, 162, 76, 0.15);
+    }
+    .pay-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .pay-logo {
+      width: 58px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #ffffff;
+      padding: 4px 6px;
+      overflow: hidden;
+      border: 1px solid rgba(212, 162, 76, 0.2);
+      transition: border-color 0.22s var(--ease);
+    }
+    .pay-card.active .pay-logo {
+      border-color: var(--gold-500);
+      box-shadow: 0 0 0 2px rgba(212, 162, 76, 0.2);
+    }
+    .pay-logo img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+    .pay-logo svg {
+      max-width: 100%;
+      max-height: 100%;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .pay-logo.whatsapp-logo {
+      background: #25D366;
+      border-color: rgba(37, 211, 102, 0.4);
+      padding: 6px;
+    }
+    .pay-card.active .pay-logo.whatsapp-logo {
+      border-color: #25D366;
+      box-shadow: 0 0 0 2px rgba(37, 211, 102, 0.3);
+    }
+    .pay-logo.whatsapp-logo svg { fill: #ffffff; }
+
+    .logo-fallback {
+      display: none;
+      font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+      font-weight: 900;
+      font-size: 0.78rem;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      line-height: 1;
+    }
+    .logo-fallback.jazz { color: #E31E24; }
+    .logo-fallback.jazz .cash { color: #F7A51C; }
+    .logo-fallback.easy { color: #00A551; }
+    .logo-fallback.easy .paisa { color: #00529C; }
+
+    .pay-info { display: grid; gap: 2px; min-width: 0; }
+    .pay-info strong { font-size: 0.92rem; color: var(--text); font-weight: 700; }
+    .pay-info span { font-size: 0.78rem; color: var(--muted); }
+
+    .payment-details {
+      margin-top: 1.25rem;
+      padding: 1.25rem 1.35rem;
+      background: rgba(212, 162, 76, 0.05);
+      border: 1px solid rgba(212, 162, 76, 0.28);
+      border-radius: 14px;
+      display: none;
+    }
+    .payment-details.show {
+      display: block;
+      animation: fadeIn 0.3s var(--ease);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .payment-details h4 {
+      margin: 0 0 1rem;
+      font-size: 0.92rem;
+      color: var(--gold-400);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .pay-detail-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(212, 162, 76, 0.15);
+      font-size: 0.9rem;
+    }
+    .pay-detail-row:last-child { border-bottom: 0; }
+    .pay-detail-label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .pay-detail-value {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+      font-weight: 600;
+      font-family: 'Courier New', monospace;
+      font-size: 0.92rem;
+    }
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.75rem;
+      transition: all 0.2s var(--ease);
+    }
+    .copy-btn:hover {
+      border-color: var(--gold-500);
+      color: var(--gold-400);
+      background: var(--gold-soft);
+    }
+    .copy-btn.copied {
+      border-color: #34d399;
+      color: #34d399;
+      background: rgba(52, 211, 153, 0.1);
+    }
+    .pay-instructions {
+      margin: 1rem 0 0;
+      padding: 0.9rem 1rem;
+      background: rgba(96, 165, 250, 0.08);
+      border-left: 3px solid #60a5fa;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.85rem;
+      color: #bfdbfe;
+      line-height: 1.6;
+    }
+    .pay-instructions strong {
+      color: #60a5fa;
+      display: block;
+      margin-bottom: 0.35rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .chat-wa-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.95rem 1.4rem;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(37, 211, 102, 0.5);
+      text-decoration: none;
+      transition: all 0.22s var(--ease);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+    }
+    .chat-wa-btn:hover {
+      background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.45);
+      color: #ffffff;
+    }
+    .chat-wa-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .file-upload-area {
+      position: relative;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background: rgba(15, 24, 45, 0.6);
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.22s var(--ease);
+    }
+    .file-upload-area:hover,
+    .file-upload-area.dragover {
+      border-color: var(--gold-500);
+      background: rgba(212, 162, 76, 0.04);
+    }
+    .file-upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .file-upload-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      color: var(--gold-400);
+    }
+    .file-upload-area p { margin: 0; color: var(--muted); font-size: 0.88rem; }
+    .file-upload-area strong { color: var(--gold-400); }
+    .file-selected {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      background: rgba(52, 211, 153, 0.06);
+      border: 1px solid rgba(52, 211, 153, 0.28);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      color: #34d399;
+    }
+    .file-selected.show {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .file-remove {
+      background: transparent;
+      border: 0;
+      color: #f87171;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .order-summary {
+      position: sticky;
+      top: calc(var(--header-h, 76px) + 20px);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.75rem;
+    }
+    @media (max-width: 1020px) {
+      .order-summary { position: relative; top: auto; }
+    }
+    .order-summary h3 {
+      margin: 0 0 1.25rem;
+      font-size: 1rem;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .order-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      font-size: 0.9rem;
+      align-items: flex-start;
+    }
+    .order-line-label { color: var(--muted); flex-shrink: 0; }
+    .order-line-value { color: var(--text); font-weight: 600; text-align: right; word-break: break-word; }
+    .order-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .order-total-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .order-total-value { font-size: 1.55rem; color: var(--gold-400); font-weight: 800; }
+    .order-total-value small { font-size: 0.85rem; color: var(--muted); font-weight: 500; margin-left: 4px; }
+    .order-trust {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      display: grid;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .order-trust li { display: flex; align-items: center; gap: 0.5rem; list-style: none; }
+    .order-trust li::before { content: '✓'; color: var(--gold-500); font-weight: 700; }
+
+    .submit-row { margin-top: 1.5rem; display: grid; gap: 1rem; }
+    .submit-row .btn { width: 100%; padding: 1.1rem; font-size: 1rem; }
+    .form-status {
+      margin: 0;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      display: none;
+      line-height: 1.5;
+    }
+    .form-status.error {
+      display: block;
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+      color: #fca5a5;
+    }
+    .form-status.success {
+      display: block;
+      background: rgba(52, 211, 153, 0.1);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      color: #6ee7b7;
+    }
+
+    .success-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 6, 14, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: fadeIn 0.3s var(--ease);
+      overflow-y: auto;
+    }
+    .success-modal.show { display: flex; }
+    .success-card {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+      margin: auto;
+    }
+    .success-icon {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.25rem;
+      border-radius: 50%;
+      background: rgba(52, 211, 153, 0.12);
+      border: 2px solid rgba(52, 211, 153, 0.4);
+      font-size: 2rem;
+      color: #34d399;
+    }
+    .success-card h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.5rem;
+      color: var(--text);
+    }
+    .success-card > p {
+      margin: 0 0 1.5rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+    .booking-ref {
+      padding: 1rem;
+      background: rgba(212, 162, 76, 0.08);
+      border: 1px dashed rgba(212, 162, 76, 0.4);
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .booking-ref-label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .booking-ref-id {
+      font-size: 1.15rem;
+      color: var(--gold-400);
+      font-weight: 800;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.05em;
+    }
+    .success-actions { display: grid; gap: 0.75rem; }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 1rem 1.4rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: 1px solid rgba(37, 211, 102, 0.5);
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+      transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease);
+      width: 100%;
+    }
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+      color: #ffffff;
+    }
+    .btn-whatsapp svg { flex-shrink: 0; width: 20px; height: 20px; }
+
+    /* NEW: Account created block */
+    #newAccountBlock {
+      display: none;
+      padding: 1.1rem 1.15rem;
+      background: rgba(52, 211, 153, 0.08);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+      border-radius: 12px;
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    #newAccountBlock.show { display: block; }
+    .new-account-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #34d399;
+      font-weight: 800;
+      margin-bottom: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .cred-row {
+      margin-bottom: 0.7rem;
+    }
+    .cred-row:last-child { margin-bottom: 0; }
+    .cred-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      margin-bottom: 0.15rem;
+    }
+    .cred-value {
+      font-family: 'Courier New', monospace;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.95rem;
+      word-break: break-all;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .cred-value.gold { color: var(--gold-400); }
+    .cred-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 0.85rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ================= NAVBAR ================= -->
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+      <span class="brand-name">The GlobalPath</span>
+    </a>
+    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a href="index.html">Home</a>
+      <a href="workshop.html">Workshop</a>
+      <a href="services.html">Services</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQs</a>
+      <a class="nav-portal" href="student.html">Student Portal</a>
+      <a class="nav-portal" href="admin.html">Admin Portal</a>
+      <a class="nav-cta active" href="book-service.html">Book a Service</a>
+    </nav>
+  </header>
+
+  <main id="book-service">
+    <section class="hero" style="padding-top: 3rem; padding-bottom: 0.5rem;">
+      <div class="hero-copy animate-in" style="max-width: 820px;">
+        <p class="eyebrow">Book a Service</p>
+        <h1>Let's Build Your Scholarship Application</h1>
+        <p>
+          Fill the form below, choose your payment method, and confirm your booking.
+          <strong style="color: var(--gold-400);">Your student portal will be created automatically</strong>
+          — you can track progress in real-time.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 1rem;">
+      <div class="booking-layout">
+
+        <!-- LEFT: FORM -->
+        <div class="booking-form-card">
+          <form id="bookingForm" novalidate>
+
+            <!-- STEP 1 -->
+            <div class="form-section">
+              <h3 class="form-section-title">
+                <span class="step-num">1</span>
+                Your Details
+              </h3>
+
+              <div class="form-row">
+                <label>
+                  Full Name <span class="required-mark">*</span>
+                  <input type="text" name="name" placeholder="e.g. Ahmed Khan" required minlength="3" autocomplete="name" />
+                </label>
+                <label>
+                  Email Address <span class="required-mark">*</span>
+                  <input type="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label>
+                  WhatsApp Number <span class="required-mark">*</span>
+                  <input type="tel" name="phone" placeholder="+92 300 1234567" required minlength="8" autocomplete="tel" />
+                </label>
+                <label>
+                  Country
+                  <input type="text" name="country" placeholder="Pakistan" autocomplete="country-name" />
+                </label>
+              </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div class="form-section">
+              <h3 class="form-section-title">
+                <span class="step-num">2</span>
+                Service Details
+              </h3>
+
+              <label>
+                Service You Want to Book <span class="required-mark">*</span>
+                <select name="service" id="serviceSelect" required>
+                  <option value="">— Select a service —</option>
+                  <option value="01">01 · Consultation Session</option>
+                  <option value="02">02 · Personal Statement Review</option>
+                  <option value="03">03 · Personal Statement Writing</option>
+                  <option value="04">04 · Study Plan Review</option>
+                  <option value="05">05 · Study Plan Writing</option>
+                  <option value="06">06 · LOR Review</option>
+                  <option value="07">07 · LOR Draft Writing</option>
+                  <option value="08">08 · CV / Resume Review</option>
+                  <option value="09">09 · CV / Resume Writing</option>
+                  <option value="10">10 · Complete Guidance (1 Month)</option>
+                  <option value="11">11 · Profile Review (Documents Only)</option>
+                  <option value="12">12 · Overall Profile Assessment</option>
+                  <option value="13">13 · Application Submission</option>
+                  <option value="14">14 · Documents Review + Application Submission</option>
+                  <option value="15">15 · Complete End-to-End Support</option>
+                </select>
+              </label>
+
+              <label>
+                Your Education Level <span class="required-mark">*</span>
+                <select name="educationLevel" id="educationLevel" required>
+                  <option value="">— Select —</option>
+                  <option value="UG">Undergraduate (BS / Bachelor's)</option>
+                  <option value="Grad">Graduate (Master's)</option>
+                  <option value="PhD">PhD</option>
+                </select>
+              </label>
+
+              <label>
+                Tell Us About Your Goals
+                <span class="optional-mark">(optional)</span>
+                <textarea name="message" rows="4"
+                  placeholder="Target scholarship (e.g. GKS 2026), deadline, target universities…"></textarea>
+              </label>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="form-section">
+              <h3 class="form-section-title">
+                <span class="step-num">3</span>
+                Choose Payment Method
+              </h3>
+
+              <div class="payment-grid" id="paymentGrid">
+
+                <label class="pay-card" data-method="jazzcash">
+                  <input type="radio" name="paymentMethod" value="jazzcash" />
+                  <span class="pay-logo">
+                    <img src="https://logo.clearbit.com/jazzcash.com.pk" alt="JazzCash" loading="lazy"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';" />
+                    <span class="logo-fallback jazz">Jazz<span class="cash">Cash</span></span>
+                  </span>
+                  <span class="pay-info">
+                    <strong>JazzCash</strong>
+                    <span>Mobile wallet</span>
+                  </span>
+                </label>
+
+                <label class="pay-card" data-method="easypaisa">
+                  <input type="radio" name="paymentMethod" value="easypaisa" />
+                  <span class="pay-logo">
+                    <img src="https://logo.clearbit.com/easypaisa.com.pk" alt="EasyPaisa" loading="lazy"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';" />
+                    <span class="logo-fallback easy">easy<span class="paisa">paisa</span></span>
+                  </span>
+                  <span class="pay-info">
+                    <strong>EasyPaisa</strong>
+                    <span>Mobile wallet</span>
+                  </span>
+                </label>
+
+                <label class="pay-card" data-method="bank">
+                  <input type="radio" name="paymentMethod" value="bank" />
+                  <span class="pay-logo" style="background: #0a2a5c;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4a24c" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 21h18"/>
+                      <path d="M5 21V10l7-5 7 5v11"/>
+                      <path d="M3 10h18"/>
+                      <path d="M9 21v-6h6v6"/>
+                    </svg>
+                  </span>
+                  <span class="pay-info">
+                    <strong>Bank Transfer</strong>
+                    <span>IBAN / Account</span>
+                  </span>
+                </label>
+
+                <label class="pay-card" data-method="whatsapp">
+                  <input type="radio" name="paymentMethod" value="whatsapp" />
+                  <span class="pay-logo whatsapp-logo">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+                    </svg>
+                  </span>
+                  <span class="pay-info">
+                    <strong>Contact First</strong>
+                    <span>+92 303 4823769</span>
+                  </span>
+                </label>
+
+              </div>
+
+              <div class="payment-details" id="paymentDetails"></div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div class="form-section" id="proofSection" style="display:none;">
+              <h3 class="form-section-title">
+                <span class="step-num">4</span>
+                Upload Payment Proof
+              </h3>
+
+              <p style="color: var(--muted); font-size: 0.9rem; margin: 0 0 1rem;">
+                Screenshot of your payment confirmation. Helps us verify faster.
+              </p>
+
+              <div class="file-upload-area" id="uploadArea">
+                <input type="file" id="proofFile" accept="image/*,.pdf" />
+                <div class="file-upload-icon">📎</div>
+                <p>Click or drag file here to upload</p>
+                <p><strong>PNG, JPG, or PDF</strong> · Max 5MB</p>
+              </div>
+
+              <div class="file-selected" id="fileSelected">
+                <span id="fileName"></span>
+                <button type="button" class="file-remove" id="removeFile">Remove</button>
+              </div>
+            </div>
+
+            <div class="submit-row">
+              <button class="btn btn-primary" type="submit" id="submitBtn">Confirm Booking</button>
+              <p class="form-status" id="formStatus" aria-live="polite"></p>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <aside class="order-summary">
+          <h3>📋 Order Summary</h3>
+
+          <div class="order-line">
+            <span class="order-line-label">Service</span>
+            <span class="order-line-value" id="summaryService">— Select a service —</span>
+          </div>
+
+          <div class="order-line">
+            <span class="order-line-label">Level</span>
+            <span class="order-line-value" id="summaryLevel">—</span>
+          </div>
+
+          <div class="order-line">
+            <span class="order-line-label">Duration</span>
+            <span class="order-line-value" id="summaryDuration">—</span>
+          </div>
+
+          <div class="order-total">
+            <span class="order-total-label">Total</span>
+            <span class="order-total-value" id="summaryTotal">0 <small>PKR</small></span>
+          </div>
+
+          <ul class="order-trust">
+            <li>Reply within 24 hours</li>
+            <li>Secure payment verification</li>
+            <li>Student portal auto-created</li>
+            <li>Real-time progress tracking</li>
+          </ul>
+        </aside>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- SUCCESS MODAL -->
+  <div class="success-modal" id="successModal">
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h2>Booking Confirmed!</h2>
+      <p>
+        Your booking has been received. We'll verify your payment and contact you within 24 hours.
+      </p>
+
+      <!-- Booking reference -->
+      <div class="booking-ref">
+        <span class="booking-ref-label">Your Booking Reference</span>
+        <span class="booking-ref-id" id="bookingRefDisplay">TGP-XXXXXX</span>
+      </div>
+
+      <!-- ⭐ NEW: Account credentials (only shown if new account created) -->
+      <div id="newAccountBlock">
+        <div class="new-account-title">✨ Student Account Created!</div>
+        <div class="cred-row">
+          <div class="cred-label">Login Email</div>
+          <div class="cred-value" id="newAccountEmail">—</div>
+        </div>
+        <div class="cred-row">
+          <div class="cred-label">Temporary Password</div>
+          <div class="cred-value gold" id="newAccountPassword">—</div>
+        </div>
+        <div class="cred-note">
+          📝 <strong>Save these credentials</strong> — you'll need them to access your student portal.
+          You can change your password later in profile settings.
+        </div>
+      </div>
+
+      <div class="success-actions">
+        <button class="btn btn-primary" id="goToPortalBtn" type="button" style="width: 100%;">
+          🎓 Go to My Student Portal
+        </button>
+        <a class="btn-whatsapp" id="whatsappConfirm" href="#" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+          </svg>
+          Confirm on WhatsApp
+        </a>
+        <a class="btn btn-secondary" href="index.html" style="width: 100%;">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img src="logo.png" alt="The GlobalPath" class="brand-logo" />
+          <span class="brand-name">The GlobalPath</span>
+        </a>
+        <p>Empowering students to study abroad through fully funded scholarships.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/the_globalpath" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="book-service.html">Book a Service</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <p class="footer-contact-line">Have a question? We reply within 24 hours.</p>
+        <a href="mailto:info@theglobalpath.com" class="footer-email">✉ info@theglobalpath.com</a>
+        <a href="student.html" class="btn btn-secondary footer-portal-btn">Student Portal →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 The GlobalPath. All rights reserved.</p>
+      <p>
+        <a href="faq.html">FAQs</a>
+        <span class="dot">·</span>
+        <a href="book-service.html">Book a Service</a>
+        <span class="dot">·</span>
+        <a href="student.html">Student Portal</a>
+      </p>
+    </div>
+  </footer>
+
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <svg class="scroll-progress" viewBox="0 0 48 48">
+      <defs>
+        <linearGradient id="scrollGoldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#d4a24c" />
+          <stop offset="50%" stop-color="#e8c372" />
+          <stop offset="100%" stop-color="#c084fc" />
+        </linearGradient>
+      </defs>
+      <circle class="scroll-progress-bg" cx="24" cy="24" r="21" />
+      <circle class="scroll-progress-bar" cx="24" cy="24" r="21" id="scrollProgressBar" />
+    </svg>
+    <svg class="scroll-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 15 12 9 18 15"></polyline>
+    </svg>
+  </button>
+
+  <!-- ================= BOOKING PAGE JS ================= -->
+  <script>
+    /* ==========================================================
+       CONFIG — Payment details
+       ========================================================== */
+    const PAYMENT_INFO = {
+      jazzcash: {
+        title: 'JazzCash Payment Details',
+        account: '0303-4823769',
+        accountTitle: 'The GlobalPath',
+        instructions: 'Open JazzCash app → Send Money → Enter number → Enter amount → Confirm. Save screenshot.'
+      },
+      easypaisa: {
+        title: 'EasyPaisa Payment Details',
+        account: '0303-4823769',
+        accountTitle: 'The GlobalPath',
+        instructions: 'Open EasyPaisa app → Send Money → Enter number → Enter amount → Confirm. Save screenshot.'
+      },
+      bank: {
+        title: 'Bank Transfer Details',
+        account: '01234567890123',
+        accountTitle: 'The GlobalPath',
+        bankName: 'Meezan Bank',
+        iban: 'PK36MEZN0001234567890123',
+        instructions: 'Transfer via banking app. Screenshot confirmation and upload.'
+      }
+    };
+
+    const WHATSAPP_NUMBER = '923034823769';
+    const WHATSAPP_DISPLAY = '+92 303 4823769';
+
+    /* ==========================================================
+       SERVICE PRICING
+       ========================================================== */
+    const SERVICES = {
+      '01': { name: 'Consultation Session', duration: '1 Hour', prices: { UG: 1500, Grad: 1500, PhD: 1500 } },
+      '02': { name: 'Personal Statement Review', duration: '4-5 Days', prices: { UG: 2000, Grad: 3000, PhD: 3000 } },
+      '03': { name: 'Personal Statement Writing', duration: '4-5 Days', prices: { UG: 3000, Grad: 5000, PhD: 6000 } },
+      '04': { name: 'Study Plan Review', duration: '4-5 Days', prices: { UG: 2000, Grad: 3000, PhD: 3000 } },
+      '05': { name: 'Study Plan Writing', duration: '4-5 Days', prices: { UG: 3000, Grad: 5000, PhD: 6000 } },
+      '06': { name: 'LOR Review', duration: '4-5 Days', prices: { UG: 1000, Grad: 2000, PhD: 2000 } },
+      '07': { name: 'LOR Draft Writing', duration: '4-5 Days', prices: { UG: 2000, Grad: 3500, PhD: 3500 } },
+      '08': { name: 'CV / Resume Review', duration: '4-5 Days', prices: { UG: 1000, Grad: 1500, PhD: 1500 } },
+      '09': { name: 'CV / Resume Writing', duration: '4-5 Days', prices: { UG: 1500, Grad: 2000, PhD: 2000 } },
+      '10': { name: 'Complete Guidance (1 Month)', duration: '1 Month', prices: { UG: 6000, Grad: 8000, PhD: 8000 } },
+      '11': { name: 'Profile Review (Documents Only)', duration: '10-15 Days', prices: { UG: 8000, Grad: 10000, PhD: 10000 } },
+      '12': { name: 'Overall Profile Assessment', duration: '10-15 Days', prices: { UG: 15000, Grad: 18000, PhD: 18000 } },
+      '13': { name: 'Application Submission', duration: '9-10 Days', prices: { UG: 10000, Grad: 12000, PhD: 12000 } },
+      '14': { name: 'Documents Review + Application Submission', duration: '15-20 Days', prices: { UG: 18000, Grad: 20000, PhD: 20000 } },
+      '15': { name: 'Complete End-to-End Support', duration: '15-20 Days', prices: { UG: 24000, Grad: 28000, PhD: 35000 } }
+    };
+
+    const EDUCATION_LABELS = {
+      UG: 'Undergraduate',
+      Grad: 'Graduate (Master\'s)',
+      PhD: 'PhD'
+    };
+
+    /* ==========================================================
+       ELEMENTS
+       ========================================================== */
+    const form = document.getElementById('bookingForm');
+    const serviceSelect = document.getElementById('serviceSelect');
+    const educationSelect = document.getElementById('educationLevel');
+    const paymentGrid = document.getElementById('paymentGrid');
+    const paymentDetails = document.getElementById('paymentDetails');
+    const proofSection = document.getElementById('proofSection');
+    const submitBtn = document.getElementById('submitBtn');
+    const formStatus = document.getElementById('formStatus');
+    const summaryService = document.getElementById('summaryService');
+    const summaryLevel = document.getElementById('summaryLevel');
+    const summaryDuration = document.getElementById('summaryDuration');
+    const summaryTotal = document.getElementById('summaryTotal');
+    const uploadArea = document.getElementById('uploadArea');
+    const proofFile = document.getElementById('proofFile');
+    const fileSelected = document.getElementById('fileSelected');
+    const fileName = document.getElementById('fileName');
+    const removeFileBtn = document.getElementById('removeFile');
+    const successModal = document.getElementById('successModal');
+    const bookingRefDisplay = document.getElementById('bookingRefDisplay');
+    const whatsappConfirm = document.getElementById('whatsappConfirm');
+    const newAccountBlock = document.getElementById('newAccountBlock');
+    const newAccountEmail = document.getElementById('newAccountEmail');
+    const newAccountPassword = document.getElementById('newAccountPassword');
+    const goToPortalBtn = document.getElementById('goToPortalBtn');
+
+    let selectedPaymentMethod = null;
+    let currentTotal = 0;
+    let uploadedFile = null;
+
+    /* ==========================================================
+       AUTO-FILL FROM URL (?service=04)
+       ========================================================== */
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedService = urlParams.get('service');
+    if (preselectedService) {
+      const padded = preselectedService.padStart(2, '0');
+      if (SERVICES[padded]) {
+        serviceSelect.value = padded;
+        setTimeout(() => {
+          serviceSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 500);
+      }
+    }
+
+    /* ==========================================================
+       AUTO-FILL FROM LOGGED-IN STUDENT (if session exists)
+       ========================================================== */
+    (function prefillIfLoggedIn() {
+      const currentId = localStorage.getItem('tgp_current_student');
+      if (!currentId) return;
+      const students = JSON.parse(localStorage.getItem('tgp_students') || '[]');
+      const student = students.find(s => s.id === currentId);
+      if (!student) return;
+
+      if (form.name && !form.name.value) form.name.value = student.name || '';
+      if (form.email && !form.email.value) form.email.value = student.email || '';
+      if (form.phone && !form.phone.value) form.phone.value = student.phone || '';
+      if (form.country && !form.country.value) form.country.value = student.country || '';
+      if (educationSelect && !educationSelect.value && student.level) educationSelect.value = student.level;
+    })();
+
+    /* ==========================================================
+       ORDER SUMMARY
+       ========================================================== */
+    function updateOrderSummary() {
+      const serviceId = serviceSelect.value;
+      const level = educationSelect.value;
+
+      if (!serviceId) {
+        summaryService.textContent = '— Select a service —';
+        summaryDuration.textContent = '—';
+        summaryLevel.textContent = '—';
+        summaryTotal.innerHTML = '0 <small>PKR</small>';
+        currentTotal = 0;
+        return;
+      }
+
+      const service = SERVICES[serviceId];
+      summaryService.textContent = service.name;
+      summaryDuration.textContent = service.duration;
+
+      if (!level) {
+        summaryLevel.textContent = '—';
+        summaryTotal.innerHTML = '<small style="color:var(--muted);font-size:0.85rem;">Select level</small>';
+        currentTotal = 0;
+        return;
+      }
+
+      summaryLevel.textContent = EDUCATION_LABELS[level];
+      currentTotal = service.prices[level] || 0;
+      summaryTotal.innerHTML = `${currentTotal.toLocaleString()} <small>PKR</small>`;
+    }
+
+    serviceSelect.addEventListener('change', () => {
+      updateOrderSummary();
+      if (selectedPaymentMethod === 'whatsapp') renderPaymentDetails('whatsapp');
+    });
+    educationSelect.addEventListener('change', () => {
+      updateOrderSummary();
+      if (selectedPaymentMethod === 'whatsapp') renderPaymentDetails('whatsapp');
+    });
+    updateOrderSummary();
+
+    /* ==========================================================
+       PAYMENT SELECTION
+       ========================================================== */
+    paymentGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('.pay-card');
+      if (!card) return;
+
+      paymentGrid.querySelectorAll('.pay-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      card.querySelector('input[type="radio"]').checked = true;
+      selectedPaymentMethod = card.dataset.method;
+
+      renderPaymentDetails(selectedPaymentMethod);
+    });
+
+    function renderPaymentDetails(method) {
+      if (method === 'whatsapp') {
+        let prefill = `Hi The GlobalPath! 👋\n\nI'm interested in booking a scholarship consultancy service.`;
+        const serviceId = serviceSelect.value;
+        const level = educationSelect.value;
+        if (serviceId && SERVICES[serviceId]) {
+          prefill += `\n\n📚 Service: ${SERVICES[serviceId].name}`;
+          if (level) {
+            prefill += `\n🎓 Level: ${EDUCATION_LABELS[level]}`;
+            prefill += `\n💰 Budget: ${SERVICES[serviceId].prices[level].toLocaleString()} PKR`;
+          }
+        }
+        prefill += `\n\nCould you guide me on the next steps?`;
+        const waURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(prefill)}`;
+
+        paymentDetails.innerHTML = `
+          <h4>💬 Contact Us on WhatsApp</h4>
+          <div class="pay-detail-row">
+            <span class="pay-detail-label">WhatsApp Number</span>
+            <span class="pay-detail-value">
+              ${WHATSAPP_DISPLAY}
+              <button type="button" class="copy-btn" data-copy="${WHATSAPP_DISPLAY}">📋</button>
+            </span>
+          </div>
+          <div class="pay-instructions">
+            <strong>What happens next</strong>
+            Click below to open WhatsApp and message us directly.
+          </div>
+          <a href="${waURL}" target="_blank" rel="noopener noreferrer" class="chat-wa-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+            </svg>
+            Open WhatsApp Chat →
+          </a>
+        `;
+        paymentDetails.classList.add('show');
+        paymentDetails.querySelectorAll('.copy-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+              btn.classList.add('copied');
+              btn.textContent = '✓';
+              setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋'; }, 1500);
+            });
+          });
+        });
+        proofSection.style.display = 'none';
+        uploadedFile = null;
+        fileSelected.classList.remove('show');
+        return;
+      }
+
+      const info = PAYMENT_INFO[method];
+      if (!info) return;
+
+      let rowsHTML = `
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Account Number</span>
+          <span class="pay-detail-value">
+            ${info.account}
+            <button type="button" class="copy-btn" data-copy="${info.account}">📋</button>
+          </span>
+        </div>
+        <div class="pay-detail-row">
+          <span class="pay-detail-label">Account Title</span>
+          <span class="pay-detail-value">
+            ${info.accountTitle}
+            <button type="button" class="copy-btn" data-copy="${info.accountTitle}">📋</button>
+          </span>
+        </div>
+      `;
+
+      if (method === 'bank') {
+        rowsHTML += `
+          <div class="pay-detail-row">
+            <span class="pay-detail-label">Bank</span>
+            <span class="pay-detail-value">${info.bankName}</span>
+          </div>
+          <div class="pay-detail-row">
+            <span class="pay-detail-label">IBAN</span>
+            <span class="pay-detail-value">
+              ${info.iban}
+              <button type="button" class="copy-btn" data-copy="${info.iban}">📋</button>
+            </span>
+          </div>
+        `;
+      }
+
+      if (currentTotal > 0) {
+        rowsHTML += `
+          <div class="pay-detail-row">
+            <span class="pay-detail-label">Amount to Send</span>
+            <span class="pay-detail-value" style="color: var(--gold-400); font-size: 1.05rem;">
+              ${currentTotal.toLocaleString()} PKR
+            </span>
+          </div>
+        `;
+      }
+
+      paymentDetails.innerHTML = `
+        <h4>${info.title}</h4>
+        ${rowsHTML}
+        <div class="pay-instructions">
+          <strong>How to pay</strong>
+          ${info.instructions}
+        </div>
+      `;
+      paymentDetails.classList.add('show');
+
+      paymentDetails.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+            btn.classList.add('copied');
+            btn.textContent = '✓';
+            setTimeout(() => { btn.classList.remove('copied'); btn.textContent = '📋'; }, 1500);
+          });
+        });
+      });
+
+      proofSection.style.display = 'block';
+    }
+
+    /* ==========================================================
+       FILE UPLOAD
+       ========================================================== */
+    proofFile.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File too large. Maximum 5MB.');
+        proofFile.value = '';
+        return;
+      }
+      uploadedFile = file;
+      fileName.textContent = `📎 ${file.name} (${(file.size / 1024).toFixed(0)} KB)`;
+      fileSelected.classList.add('show');
+    });
+
+    removeFileBtn.addEventListener('click', () => {
+      uploadedFile = null;
+      proofFile.value = '';
+      fileSelected.classList.remove('show');
+    });
+
+    ['dragenter', 'dragover'].forEach(evt => {
+      uploadArea.addEventListener(evt, (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach(evt => {
+      uploadArea.addEventListener(evt, (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+      });
+    });
+    uploadArea.addEventListener('drop', (e) => {
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        proofFile.files = e.dataTransfer.files;
+        proofFile.dispatchEvent(new Event('change'));
+      }
+    });
+
+    /* ==========================================================
+       HELPERS
+       ========================================================== */
+    function showStatus(msg, type) {
+      formStatus.textContent = msg;
+      formStatus.className = `form-status ${type}`;
+    }
+    function clearStatus() {
+      formStatus.textContent = '';
+      formStatus.className = 'form-status';
+    }
+    function generateRef() {
+      const ts = Date.now().toString(36).toUpperCase().slice(-6);
+      const rand = Math.random().toString(36).substring(2, 5).toUpperCase();
+      return `TGP-${ts}-${rand}`;
+    }
+
+    /* ==========================================================
+       ⭐ FORM SUBMIT — Auto-account creation + save booking
+       ========================================================== */
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearStatus();
+
+      // Validation
+      const name = (form.name.value || '').trim();
+      const email = (form.email.value || '').trim().toLowerCase();
+      const phone = (form.phone.value || '').trim();
+      const country = (form.country.value || '').trim();
+      const serviceId = serviceSelect.value;
+      const level = educationSelect.value;
+
+      if (name.length < 3) return showStatus('Please enter your full name.', 'error');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showStatus('Please enter a valid email.', 'error');
+      if (phone.length < 8) return showStatus('Please enter a valid WhatsApp number.', 'error');
+      if (!serviceId) return showStatus('Please select a service.', 'error');
+      if (!level) return showStatus('Please select your education level.', 'error');
+      if (!selectedPaymentMethod) return showStatus('Please choose a payment method.', 'error');
+
+      const isOnlinePayment = ['jazzcash', 'easypaisa', 'bank'].includes(selectedPaymentMethod);
+      if (isOnlinePayment && !uploadedFile) {
+        return showStatus('Please upload a screenshot of your payment.', 'error');
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing…';
+
+      try {
+        /* ---------- STEP 1: Check/Create student account ---------- */
+        const students = JSON.parse(localStorage.getItem('tgp_students') || '[]');
+        let student = students.find(s => (s.email || '').toLowerCase() === email);
+        let isNewAccount = false;
+        let tempPassword = null;
+
+        if (!student) {
+          // Generate temp password from phone digits (memorable + secure enough)
+          const phoneDigits = phone.replace(/\D/g, '');
+          tempPassword = phoneDigits.length >= 6 
+            ? phoneDigits.slice(-6) 
+            : (phoneDigits + '123456').slice(0, 6);
+
+          student = {
+            id: 'stu_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+            name: name,
+            email: email,
+            password: tempPassword,
+            phone: phone,
+            level: level,
+            country: country,
+            dob: '',
+            gender: '',
+            qualification: '',
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          };
+          students.push(student);
+          localStorage.setItem('tgp_students', JSON.stringify(students));
+          isNewAccount = true;
+        } else {
+          // Existing student — update details if missing
+          let changed = false;
+          if (!student.phone && phone) { student.phone = phone; changed = true; }
+          if (!student.country && country) { student.country = country; changed = true; }
+          if (!student.level && level) { student.level = level; changed = true; }
+          if (changed) {
+            student.updatedAt = Date.now();
+            localStorage.setItem('tgp_students', JSON.stringify(students));
+          }
+        }
+
+        /* ---------- STEP 2: Prepare payment proof (base64 if small) ---------- */
+        let proofDataURL = null;
+        if (uploadedFile && uploadedFile.size < 200 * 1024) {
+          proofDataURL = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (evt) => resolve(evt.target.result);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(uploadedFile);
+          });
+        }
+
+        /* ---------- STEP 3: Save booking ---------- */
+        const bookings = JSON.parse(localStorage.getItem('tgp_bookings') || '[]');
+        const bookingRef = generateRef();
+
+        const booking = {
+          id: 'bk_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+          bookingRef: bookingRef,
+          userId: student.id,
+          name: name,
+          email: email,
+          phone: phone,
+          country: country,
+          serviceId: serviceId,
+          service: SERVICES[serviceId].name,
+          educationLevel: level,
+          duration: SERVICES[serviceId].duration,
+          amount: currentTotal,
+          paymentMethod: selectedPaymentMethod,
+          paymentProof: proofDataURL,
+          paymentProofName: uploadedFile ? uploadedFile.name : null,
+          paymentProofSize: uploadedFile ? uploadedFile.size : 0,
+          message: (form.message.value || '').trim(),
+          progress: 0,
+          status: isOnlinePayment ? 'pending-verification' : 'new',
+          createdAt: Date.now()
+        };
+
+        bookings.push(booking);
+        localStorage.setItem('tgp_bookings', JSON.stringify(bookings));
+
+        /* ---------- STEP 4: Also save contact message ---------- */
+        const contactMsgs = JSON.parse(localStorage.getItem('tgp_contact_messages') || '[]');
+        contactMsgs.push({
+          id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+          name: name,
+          email: email,
+          service: SERVICES[serviceId].name,
+          message: (form.message.value || '').trim() || `Booking for ${SERVICES[serviceId].name}`,
+          read: false,
+          type: 'booking',
+          bookingRef: bookingRef,
+          createdAt: Date.now()
+        });
+        localStorage.setItem('tgp_contact_messages', JSON.stringify(contactMsgs));
+
+        /* ---------- STEP 5: Show success modal ---------- */
+        bookingRefDisplay.textContent = bookingRef;
+
+        if (isNewAccount) {
+          newAccountBlock.classList.add('show');
+          newAccountEmail.textContent = email;
+          newAccountPassword.textContent = tempPassword;
+        } else {
+          newAccountBlock.classList.remove('show');
+        }
+
+        // WhatsApp message
+        const waMessage = encodeURIComponent(
+          `Hi The GlobalPath! 👋\n\n` +
+          `I just booked a service.\n\n` +
+          `📋 Ref: ${bookingRef}\n` +
+          `📚 Service: ${SERVICES[serviceId].name}\n` +
+          `🎓 Level: ${EDUCATION_LABELS[level]}\n` +
+          `💰 Amount: ${currentTotal.toLocaleString()} PKR\n` +
+          `💳 Payment: ${selectedPaymentMethod}\n\n` +
+          `Please confirm.`
+        );
+        whatsappConfirm.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`;
+
+        // "Go to My Portal" — auto-login and redirect
+        goToPortalBtn.onclick = () => {
+          localStorage.setItem('tgp_current_student', student.id);
+          window.location.href = 'student.html';
+        };
+
+        successModal.classList.add('show');
+
+        // Reset form
+        form.reset();
+        paymentGrid.querySelectorAll('.pay-card').forEach(c => c.classList.remove('active'));
+        paymentDetails.classList.remove('show');
+        proofSection.style.display = 'none';
+        fileSelected.classList.remove('show');
+        uploadedFile = null;
+        selectedPaymentMethod = null;
+        updateOrderSummary();
+
+      } catch (err) {
+        console.error(err);
+        showStatus('Something went wrong. Please try again or message us on WhatsApp.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirm Booking';
+      }
+    });
+
+    /* Close modal on backdrop click */
+    successModal.addEventListener('click', (e) => {
+      if (e.target === successModal) successModal.classList.remove('show');
+    });
+  </script>
+
+  <script src="index.js"></script>
+</body>
+</html>
